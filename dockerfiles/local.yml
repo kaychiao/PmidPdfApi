@@ -1,0 +1,11 @@
+version: "3.5"
+
+services:
+  web:
+    container_name: pmid-pdf-api-local
+    environment:
+      - FM_ENV_CONFIG=local
+      - PYTHONUNBUFFERED=1
+    command: sh /app/dockerfiles/sh/run_gunicorn.sh 8091
+    ports:
+      - "8091:8091"

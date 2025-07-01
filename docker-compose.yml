@@ -1,0 +1,29 @@
+version: "3.5"
+
+x-pmid-pdf-api-common: &pmid-pdf-api-common
+  privileged: true
+  restart: always
+  environment:
+    TZ: 'Asia/Shanghai'
+  env_file:
+    - ./.env
+
+services:
+  web:
+    image: "${IMAGE_NAME}:${IMAGE_TAG}"
+    <<: *pmid-pdf-api-common
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ./:/app
+    networks:
+      pmid-pdf-api-nw:
+        aliases:
+          - pmid-pdf-api-web
+
+networks:
+  pmid-pdf-api-nw:
+    name: pmid_pdf_api_nw
